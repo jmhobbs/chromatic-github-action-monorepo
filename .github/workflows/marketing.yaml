@@ -1,0 +1,19 @@
+name: 'Chromatic - Public'
+
+on: push
+
+jobs:
+  chromatic-marketing:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Install dependencies
+        run: yarn
+        working-directory: marketing
+      - name: Publish to Chromatic
+        uses: chromaui/action@v1
+        with:
+          workingDir: marketing
+          token: ${{ secrets.GITHUB_TOKEN }}
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN_MARKETING }}
+

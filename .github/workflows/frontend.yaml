@@ -1,0 +1,20 @@
+name: 'Chromatic - Public'
+
+on: push
+
+jobs:
+  chromatic-frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v1
+      - name: Install dependencies
+        run: yarn
+      - name: Publish to Chromatic
+        uses: chromaui/action@v1
+        with:
+          workingDir: frontend
+          token: ${{ secrets.GITHUB_TOKEN }}
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN_FRONTEND }}

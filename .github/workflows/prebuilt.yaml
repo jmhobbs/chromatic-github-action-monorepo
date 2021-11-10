@@ -1,0 +1,24 @@
+name: 'Chromatic - Prebuilt'
+
+on: push
+
+defaults:
+  run:
+    working-directory: prebuilt
+
+jobs:
+  chromatic-prebuilt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Install dependencies
+        run: yarn
+      - name: Prebuild Storybook
+        run: yarn build-storybook
+      - name: Publish to Chromatic
+        uses: chromaui/action@v1
+        with:
+          workingDir: prebuilt
+          token: ${{ secrets.GITHUB_TOKEN }}
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN_PREBUILT }}
+          storybookBuildDir: storybook-static
